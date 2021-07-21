@@ -14,8 +14,6 @@ import { Container } from "react-bootstrap";
 
 function App() {
 
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  
   return (
       <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "100vh"}}>
         <Router>
@@ -31,15 +29,15 @@ function App() {
             </Route>
 
             <Route exact strict path="/user/:username">
-              <User setIsSignedIn={setIsSignedIn} />
+              <User />
             </Route>
 
             <Route exact strict path="/sign-in">
-              <SignIn setIsSignedIn={setIsSignedIn} />
+              <SignIn />
             </Route>
 
             <Route exact strict path="/sign-up">
-              <SignUp setIsSignedIn={setIsSignedIn} />
+              <SignUp />
             </Route>
           </Switch>
         </Router>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button, Card } from "react-bootstrap";
 import { auth } from "../firebase";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function SignUp() {
     
@@ -39,6 +39,7 @@ function SignUp() {
                                 type="email"
                                 onChange={handleFormChange}
                                 name="email"
+                                value={formData.email}
                                 required 
                             />
                         </Form.Group>
@@ -49,6 +50,7 @@ function SignUp() {
                                 type="password"
                                 onChange={handleFormChange}
                                 name="password"
+                                value={formData.password}
                                 required 
                             />
                         </Form.Group>
@@ -59,6 +61,7 @@ function SignUp() {
                                 type="password"
                                 onChange={handleFormChange}
                                 name="passwordConfirmation"
+                                value={formData.passwordConfirmation}
                                 required 
                             />
                         </Form.Group>
