@@ -1,6 +1,13 @@
+// react
 import React, { useState } from 'react'
+
+// bootstrap
 import { Form, Button, Card } from "react-bootstrap";
+
+// router
 import { auth } from "../firebase";
+
+// firebase
 import { Link } from "react-router-dom";
 
 function SignUp() {
@@ -10,18 +17,17 @@ function SignUp() {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        console.log(event.target);
 
         if (formData.password === formData.passwordConfirmation) {
             auth.createUserWithEmailAndPassword(formData.email, formData.password)
-                .then(cred => console.log(cred))
-                .then(() => console.log("Your account created successfully!"))
-                .catch((error) => console.error("A problem occured while your accunt being created!", error));
+            .then(cred => console.log(cred))
+            .then(() => console.log("Your account created successfully!"))
+            .catch((error) => console.error("A problem occured while your accunt being created!", error));
         } else {
             console.log("Passwords are not the same.");
         }
         event.target.reset(); // empty the form fields
-    }   // submit people to their profile after submission
+    }   // redirect people to their profile after submission
 
     function handleFormChange(event) {
         setFormData({ ...formData, [event.target.name]: event.target.value });

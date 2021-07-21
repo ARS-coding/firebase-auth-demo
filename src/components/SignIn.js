@@ -1,6 +1,13 @@
+// react
 import React, { useState } from 'react'
+
+// bootstrap
 import { Form, Button, Card } from "react-bootstrap";
+
+// router
 import { auth } from "../firebase";
+
+// firebase
 import { Link } from "react-router-dom";
 
 function SignIn() {
@@ -10,9 +17,14 @@ function SignIn() {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        console.log("form data!", formData);
-        console.log("submit!");
-    }   // submit people to their profile after submission
+
+        auth.signInWithEmailAndPassword(formData.email, formData.password)
+        .then(cred => console.log(cred))
+        .then(() => console.log("You have successfully signed in!"))
+        .catch((error) => console.error("A problem occurred while logging in.", error))
+        
+        event.target.reset(); // empty the form fields
+    }   // redirect people to their profile after submission
 
 
     function handleFormChange(event) {
