@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Card } from "react-bootstrap";
-import { firestore, auth } from "../firebase";
+import { auth } from "../firebase";
 
-function SignUp() {
+function SignUp({ setIsSignedIn }) {
 
-    const [formData, setFormData] = useState({ email: "", password: "", passwordConfirmation: "" });
+    const initialFormData = { email: "", password: "", passwordConfirmation: "" };
+    const [formData, setFormData] = useState(initialFormData);
 
     function handleFormSubmit(event) {
         event.preventDefault();
@@ -13,11 +14,13 @@ function SignUp() {
         if (formData.password === formData.passwordConfirmation) {
             auth.createUserWithEmailAndPassword(formData.email, formData.password)
                 .then(cred => console.log(cred))
+                .then(() => setIsSignedIn(true)) // let the state know user is signed in
                 .then(() => console.log("Your account created successfully!"))
-                .catch((err) => console.error("A problem occured while your accunt being created!", err));
+                .catch((error) => console.error("A problem occured while your accunt being created!", error));
         } else {
             console.log("Passwords are not the same.");
         }
+        event.target.reset(); // empty the form fields
     }
 
     function handleFormChange(event) {
