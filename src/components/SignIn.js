@@ -11,6 +11,10 @@ import { auth } from "../firebase";
 import { Link } from "react-router-dom";
 
 function SignIn() {
+
+    auth.onAuthStateChanged(user => {
+        user ? console.log("there's a user logged in!", user) : console.log("there's no user logged in!", user)
+    })
     
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);

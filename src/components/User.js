@@ -1,6 +1,11 @@
+// react
 import React from 'react'
-import { auth } from "../firebase";
+
+// router
 import { useParams } from "react-router-dom";
+
+// firebase
+import { auth } from "../firebase";
 
 function User({ match }) {
 
