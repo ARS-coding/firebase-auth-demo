@@ -5,30 +5,23 @@ import React from "react";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import User from "./components/User";
-import LandingPage from "./LandingPage";
-
-// router
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+import NavBar from "./components/NavBar/NavBar";
 
 // bootstrap
 import { Container } from "react-bootstrap";
+
+// router
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 // firebase
 import { auth } from "./firebase";
 
 function App() {
-
-  function handleSignOut() {
-    auth.signOut()
-    .then(() => console.log("You have signed out successfully!"))
-    .catch((error) => console.error("A problem occurred while logging out.", error))
-  }
-
   return (
-      <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "100vh"}}>
+      <Container style={{minHeight: "100vh"}}>
         <Router>
-          <Link to="/">Home</Link>
-          <button onClick={handleSignOut}>Sign Out</button>
+          <NavBar />
           <Switch>
             <Route exact strict path="/">
               <LandingPage />
