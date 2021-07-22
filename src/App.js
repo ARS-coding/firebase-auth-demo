@@ -5,6 +5,7 @@ import React from "react";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import User from "./components/User";
+import LandingPage from "./LandingPage";
 
 // router
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -30,13 +31,7 @@ function App() {
           <button onClick={handleSignOut}>Sign Out</button>
           <Switch>
             <Route exact strict path="/">
-              <h1>Landing Page!</h1>
-              <p>
-                If you don't have an account <Link to="/sign-up">Sign up!</Link>
-              </p>
-              <p>
-                If you have an account <Link to="/sign-in">Sign in!</Link>
-              </p>
+              <LandingPage />
             </Route>
 
             <Route exact strict path="/user/:username">
