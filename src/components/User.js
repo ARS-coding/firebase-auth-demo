@@ -16,13 +16,13 @@ function User({ match }) {
 
     function handleClick() {
         auth.signOut()
-            .then(() => console.log("You have successfully signed out!"))
-            .catch((error) => console.error("A problem occured while signing out.", error))
+        .then(() => console.log("You have successfully signed out!"))
+        .catch((error) => console.error("A problem occured while signing out.", error))
     }
 
     return (
         <>
-            <h1>Welcome {userName}!</h1>
+            <h1>Welcome, {userName}!</h1>
             <Container>
                 <Row>
                     <Col></Col>

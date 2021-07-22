@@ -2,18 +2,20 @@
 import React, { useState } from 'react'
 
 // bootstrap
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 
 // router
-import { auth } from "../firebase";
+import { Link, Redirect } from "react-router-dom";
 
 // firebase
-import { Link } from "react-router-dom";
+import { auth } from "../firebase";
 
 function SignIn() {
 
     auth.onAuthStateChanged(user => {
-        user ? console.log("there's a user logged in!", user) : console.log("there's no user logged in!", user)
+        console.log("of")
+        if (user) { return <Redirect to="/user/ali" /> }
+        else { return <Redirect to="/" /> }
     })
     
     const initialFormData = { email: "", password: "" };
@@ -21,13 +23,13 @@ function SignIn() {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-
+        
         auth.signInWithEmailAndPassword(formData.email, formData.password)
         .then(cred => console.log(cred))
         .then(() => console.log("You have successfully signed in!"))
         .catch((error) => console.error("A problem occurred while logging in.", error))
         
-        event.target.reset(); // empty the form fields
+        setFormData(initialFormData)
     }   // redirect people to their profile after submission
 
 
@@ -36,7 +38,7 @@ function SignIn() {
     }
 
     return (
-        <>
+        <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "80vh"}}>
             <Card style={{width: "30%"}} className="ml-3 m-auto m-3">
                 <Card.Body>
                     <h2 className="text-center">Sign In</h2>
@@ -69,7 +71,7 @@ function SignIn() {
             <div className="w-100 text-center mt-2">
                 Don't you have an account? <Link to="/sign-up">Sign up!</Link>
             </div>
-        </>
+        </Container>
     )
 }
 

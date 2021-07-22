@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 
 // bootstrap
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 
 // router
 import { auth } from "../firebase";
@@ -26,7 +26,7 @@ function SignUp() {
         } else {
             console.log("Passwords are not the same.");
         }
-        event.target.reset(); // empty the form fields
+        setFormData(initialFormData)
     }   // redirect people to their profile after submission
 
     function handleFormChange(event) {
@@ -34,7 +34,7 @@ function SignUp() {
     }
 
     return (
-        <>
+        <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "80vh"}}>
             <Card style={{width: "30%"}} className="ml-3 m-auto m-3">
                 <Card.Body>
                     <h2 className="text-center">Sign Up</h2>
@@ -78,7 +78,7 @@ function SignUp() {
             <div className="w-100 text-center mt-2">
                 Do you already have an account? <Link to="sign-in">Sign in!</Link>
             </div>
-        </>
+        </Container>
     )
 }
 

@@ -12,10 +12,7 @@ import NavBar from "./components/NavBar/NavBar";
 import { Container } from "react-bootstrap";
 
 // router
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-// firebase
-import { auth } from "./firebase";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
