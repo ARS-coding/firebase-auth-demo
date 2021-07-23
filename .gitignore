@@ -2,6 +2,8 @@
 
 #config
 src/firebase.js
+firebaseAdmin.js
+importantPaths.js
 
 # dependencies
 /node_modules

@@ -18,10 +18,6 @@ function NavBar() {
         .catch((error) => console.error("A problem occurred while logging out.", error))
     }
 
-    console.log("ey", auth.currentUser)
-
-    // console.log("auth", auth)
-    // console.log("auth user", auth. user)
     return (
         <Nav className="navbar">
             <Nav.Item>

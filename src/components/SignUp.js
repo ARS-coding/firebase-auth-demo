@@ -10,6 +10,9 @@ import { auth } from "../firebase";
 // firebase
 import { Link } from "react-router-dom";
 
+// react-redux
+import { useDispatch } from "react-redux";
+
 function SignUp() {
     
     const initialFormData = { email: "", password: "", passwordConfirmation: "" };

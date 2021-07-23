@@ -1,6 +1,7 @@
-export const signIn = () => {
+export const signIn = (email) => {
     return {
-        type: "user/signIn"
+        type: "user/signIn",
+        payload: email
     }
 }
 
@@ -11,17 +12,20 @@ export const signOut = () => {
 }
 
 const initialState = {
-    isSignedIn: false
-}
+    email: ""
+} // current user's info
 
-function userRedducer(state = intialState, action) {
+function userReducer(state = initialState, action) {
     switch(action.type) {
         case "user/signIn":
-            return { ...state, isSignedIn: true };
+            return { ...state, email: action.payload }; // payload is email of the user
 
         case "user/signOut":
-            return { ...state, isSignedIn: false };
+            return { ...initialState };
+        
+        default:
+            return state;
     }
 }
 
-export default userRedducer;
+export default userReducer;
