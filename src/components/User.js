@@ -4,13 +4,10 @@ import React from 'react'
 // router
 import { useParams } from "react-router-dom";
 
-// firebase
-import { auth } from "../firebase";
-
 // bootstrap
 import { Container, Row, Col } from "react-bootstrap";
 
-function User({ match }) {
+function User() {
 
     const userName = useParams().username;
 

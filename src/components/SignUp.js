@@ -14,7 +14,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // custom hooks
-import { setDocument } from "../hooks/setDocument";
+import { setDocument } from "../hooks/setUserDocument";
 import { removeOneProp } from "../hooks/removeOneProp";
 
 function SignUp() {

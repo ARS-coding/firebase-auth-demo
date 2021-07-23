@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { Form, Button, Card, Container } from "react-bootstrap";
 
 // router
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // firebase
 import { auth, firestore } from "../firebase";
