@@ -21,7 +21,7 @@ import { createStore, applyMiddleware } from "redux";
 // root reducer
 import rootReducer from "./rootReducer";
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
   <React.StrictMode>
