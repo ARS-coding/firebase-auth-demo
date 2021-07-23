@@ -1,5 +1,5 @@
 //react
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // components
 import SignUp from "./components/SignUp";
@@ -16,9 +16,24 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 // firebase
-import { auth } from "./firebase";
+import { auth, firestore } from "./firebase";
+
+// action creator functions
+import { fetchUsers, fetchUpdatedUsers } from "./usersSlice";
+
+// react-redux
+import { useDispatch, useSelector } from "react-redux";
+
 
 function App() {
+
+  const dispatch = useDispatch();
+  const usersArray = useSelector(state => state.users.usersArray); //  use this in the page that you are gonna show the registered users
+
+  useEffect(() => {
+    dispatch(fetchUpdatedUsers()); // add the listener to the server for future changes just for once.
+    dispatch(fetchUsers());
+  }, []);
 
   const [isSignedIn, setIsSignedIn] = useState(false);
 
