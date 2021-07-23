@@ -18,10 +18,16 @@ import thunkMiddleware from 'redux-thunk';
 // redux
 import { createStore, applyMiddleware } from "redux";
 
+// root reducer
+import rootReducer from "./rootReducer";
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
