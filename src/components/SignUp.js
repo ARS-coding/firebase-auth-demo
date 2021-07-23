@@ -10,9 +10,6 @@ import { auth } from "../firebase";
 // router
 import { Link, useHistory } from "react-router-dom";
 
-// react-redux
-import { useDispatch } from "react-redux";
-
 // custom hooks
 import { setDocument } from "../hooks/setUserDocument";
 import { removeOneProp } from "../hooks/removeOneProp";

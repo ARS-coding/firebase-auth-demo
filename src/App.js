@@ -8,32 +8,32 @@ import User from "./components/User";
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar/NavBar";
 import PleaseSignIn from "./components/PleaseSignIn/PleaseSignIn";
+import Users from "./components/Users/Users";
 
 // bootstrap
 import { Container } from "react-bootstrap";
 
 // router
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // firebase
-import { auth, firestore } from "./firebase";
+import { auth } from "./firebase";
 
 // action creator functions
 import { fetchUsers, fetchUpdatedUsers } from "./usersSlice";
 
 // react-redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 function App() {
 
   const dispatch = useDispatch();
-  const usersArray = useSelector(state => state.users.usersArray); //  use this in the page that you are gonna show the registered users
 
   useEffect(() => {
-    dispatch(fetchUpdatedUsers()); // add the listener to the server for future changes just for once.
-    dispatch(fetchUsers());
-  }, []);
+    dispatch(fetchUpdatedUsers()); // add the listener to the server for future changes just for once
+    dispatch(fetchUsers()); // fetch the current users on the firestore for once 
+  }, [dispatch]);
 
   const [isSignedIn, setIsSignedIn] = useState(false);
 
@@ -55,7 +55,11 @@ function App() {
             <Route exact strict path="/sign-up">
               <SignUp />
             </Route>
-         
+
+            <Route exact strict path="/users">
+              <Users />
+            </Route>
+
             <Route exact strict path="/user/:username">
               {isSignedIn ? <User /> : <PleaseSignIn />} 
             </Route>
