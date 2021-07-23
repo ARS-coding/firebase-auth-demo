@@ -24,16 +24,16 @@ function App() {
               <LandingPage />
             </Route>
 
-            <Route exact strict path="/user/:username">
-              <User />
-            </Route>
-
             <Route exact strict path="/sign-in">
               <SignIn />
             </Route>
 
             <Route exact strict path="/sign-up">
               <SignUp />
+            </Route>
+         
+            <Route exact strict path="/user/:username">
+              <User />
             </Route>
           </Switch>
         </Router>

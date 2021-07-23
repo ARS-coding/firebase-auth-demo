@@ -13,7 +13,6 @@ import { auth } from "../firebase";
 function SignIn() {
 
     auth.onAuthStateChanged(user => {
-        console.log("of")
         if (user) { return <Redirect to="/user/ali" /> }
         else { return <Redirect to="/" /> }
     })

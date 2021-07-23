@@ -14,12 +14,6 @@ function User({ match }) {
 
     const userName = useParams().username;
 
-    function handleClick() {
-        auth.signOut()
-        .then(() => console.log("You have successfully signed out!"))
-        .catch((error) => console.error("A problem occured while signing out.", error))
-    }
-
     return (
         <>
             <h1>Welcome, {userName}!</h1>
@@ -29,7 +23,6 @@ function User({ match }) {
                     <Col></Col>
                 </Row>
             </Container>
-            <button onClick={handleClick}>Sign Out!</button>
         </>
     )
 }
