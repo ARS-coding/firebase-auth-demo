@@ -5,32 +5,31 @@ import React, { useState } from 'react'
 import { Form, Button, Card, Container } from "react-bootstrap";
 
 // router
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 
 // firebase
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
 
 function SignIn() {
 
-    auth.onAuthStateChanged(user => {
-        if (user) { return <Redirect to="/user/ali" /> }
-        else { return <Redirect to="/" /> }
-    })
-    
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);
+    let history = useHistory();
 
     function handleFormSubmit(event) {
         event.preventDefault();
         
         auth.signInWithEmailAndPassword(formData.email, formData.password)
-        .then(cred => console.log(cred))
-        .then(() => console.log("You have successfully signed in!"))
+        .then(cred => {
+            firestore.collection("users").where("email", "==", cred.user.email).get()
+            .then(snapshot => snapshot.docs[0].data())
+            .then(data => history.push(`/user/${data.username}`))
+        })
+        // .then(cred => history.push(`/user/${formData.username}`))
         .catch((error) => console.error("A problem occurred while logging in.", error))
         
         setFormData(initialFormData)
-    }   // redirect people to their profile after submission
-
+    }
 
     function handleFormChange(event) {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -42,6 +41,7 @@ function SignIn() {
                 <Card.Body>
                     <h2 className="text-center">Sign In</h2>
                     <form onSubmit={handleFormSubmit}>
+
                         <Form.Group id="email" className="my-3">
                             <Form.Label>Email</Form.Label>
                             <Form.Control 

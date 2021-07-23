@@ -4,33 +4,39 @@ import React, { useState } from 'react'
 // bootstrap
 import { Form, Button, Card, Container } from "react-bootstrap";
 
-// router
+// firebase
 import { auth } from "../firebase";
 
-// firebase
-import { Link } from "react-router-dom";
+// router
+import { Link, useHistory } from "react-router-dom";
 
 // react-redux
 import { useDispatch } from "react-redux";
 
+// custom hooks
+import { setDocument } from "../hooks/setDocument";
+import { removeOneProp } from "../hooks/removeOneProp";
+
 function SignUp() {
     
-    const initialFormData = { email: "", password: "", passwordConfirmation: "" };
+    const initialFormData = { username: "", email: "", password: "", passwordConfirmation: "" };
     const [formData, setFormData] = useState(initialFormData);
+    let history = useHistory();
 
     function handleFormSubmit(event) {
         event.preventDefault();
 
         if (formData.password === formData.passwordConfirmation) {
+            setDocument(formData.username, removeOneProp(formData, "passwordConfirmation"));
+
             auth.createUserWithEmailAndPassword(formData.email, formData.password)
-            .then(cred => console.log(cred))
-            .then(() => console.log("Your account created successfully!"))
+            .then(cred => history.push(`/user/${formData.username}`))
             .catch((error) => console.error("A problem occured while your accunt being created!", error));
         } else {
             console.log("Passwords are not the same.");
         }
         setFormData(initialFormData)
-    }   // redirect people to their profile after submission
+    }
 
     function handleFormChange(event) {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -42,6 +48,17 @@ function SignUp() {
                 <Card.Body>
                     <h2 className="text-center">Sign Up</h2>
                     <form onSubmit={handleFormSubmit}>
+                        <Form.Group id="email" className="my-3">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control 
+                                type="text"
+                                onChange={handleFormChange}
+                                name="username"
+                                value={formData.username}
+                                required 
+                            />
+                        </Form.Group>
+
                         <Form.Group id="email" className="my-3">
                             <Form.Label>Email</Form.Label>
                             <Form.Control 
