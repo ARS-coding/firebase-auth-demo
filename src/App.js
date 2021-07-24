@@ -19,21 +19,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // firebase
 import { auth } from "./firebase";
 
-// action creator functions
-import { fetchUsers, fetchUpdatedUsers } from "./components/Users/usersSlice";
-
-// react-redux
-import { useDispatch } from "react-redux";
-
-
 function App() {
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUpdatedUsers()); // add the listener to the server for future changes just for once
-    dispatch(fetchUsers()); // fetch the current users on the firestore for once 
-  }, [dispatch]);
 
   const [isSignedIn, setIsSignedIn] = useState(false);
 
