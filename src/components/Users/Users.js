@@ -16,6 +16,9 @@ import UserCard from "./User/UserCard";
 // action creator functions
 import { fetchUsers, fetchUpdatedUsers } from "./usersSlice";
 
+// uuid
+import { v4 as uuidv4 } from "uuid";
+
 function Users() {
 
     const dispatch = useDispatch();
@@ -30,7 +33,7 @@ function Users() {
         <Container className="users-container">
             <Row className="justify-content-center">
                 <h1 className="text-center">Here's all the users registered to this amazing web application!</h1>
-                {usersArray.map(userObject => <UserCard userObject={userObject} />)}
+                {usersArray.map(userObject => <UserCard key={uuidv4()} userObject={userObject} />)}
             </Row>
         </Container>
     )

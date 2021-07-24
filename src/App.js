@@ -1,5 +1,5 @@
 //react
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // components
 import SignUp from "./components/SignUp";
