@@ -10,7 +10,14 @@ import { Link, useHistory } from "react-router-dom";
 // firebase
 import { auth, firestore } from "../firebase";
 
+import { useDispatch } from "react-redux";
+
 function SignIn() {
+    
+    const dispatch = useDispatch();
+    // auth.onAuthStateChanged(user => {
+    //     user ? dispatch({ type: "user/checked", payload: user }) : dispatch({ type: "user/checked", paylaod: null })
+    // })
 
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);

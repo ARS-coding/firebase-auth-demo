@@ -11,7 +11,7 @@ import "./Users.css";
 import { useSelector } from "react-redux";
 
 // components 
-import UserCard from "./UserCard";
+import UserCard from "./User/UserCard";
 
 function Users() {
 

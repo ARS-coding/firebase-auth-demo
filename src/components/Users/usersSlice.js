@@ -1,5 +1,5 @@
 // firestore
-import { firestore } from "./firebase";
+import { firestore } from "../../firebase";
 
 export const fetchUsers = () => { // being dispatched whenever app component mounts
     return (dispatch) => {
@@ -36,11 +36,11 @@ export const fetchUpdatedUsers = () => {
 // }
 
 const initialState = {
-    status: "", // loading or loaded
+    status: "", // loading or loaded, updating or updated
     usersArray: []
 };
 
-function usersReducer(state = initialState, action) {
+const usersReducer = (state = initialState, action) => {
     switch(action.type) {
         case "users/loading": 
             return { ...state, status: "loading"};

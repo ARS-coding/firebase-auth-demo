@@ -15,7 +15,7 @@ import { setDocument } from "../hooks/setUserDocument";
 import { removeOneProp } from "../hooks/removeOneProp";
 
 function SignUp() {
-    
+
     const initialFormData = { username: "", email: "", password: "", passwordConfirmation: "" };
     const [formData, setFormData] = useState(initialFormData);
     let history = useHistory();

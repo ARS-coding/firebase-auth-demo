@@ -20,7 +20,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 
 // action creator functions
-import { fetchUsers, fetchUpdatedUsers } from "./usersSlice";
+import { fetchUsers, fetchUpdatedUsers } from "./components/Users/usersSlice";
 
 // react-redux
 import { useDispatch } from "react-redux";
