@@ -10,29 +10,22 @@ import { Link, useHistory } from "react-router-dom";
 // firebase
 import { auth, firestore } from "../firebase";
 
-import { useDispatch } from "react-redux";
-
 function SignIn() {
-    
-    const dispatch = useDispatch();
-    // auth.onAuthStateChanged(user => {
-    //     user ? dispatch({ type: "user/checked", payload: user }) : dispatch({ type: "user/checked", paylaod: null })
-    // })
 
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);
     let history = useHistory();
 
-    function handleFormSubmit(event) {
+    async function handleFormSubmit(event) {
         event.preventDefault();
-        
+        // await sign in here and then contnue
         auth.signInWithEmailAndPassword(formData.email, formData.password)
         .then(cred => {
             firestore.collection("users").where("email", "==", cred.user.email).get()
             .then(snapshot => snapshot.docs[0].data())
-            .then(data => history.push(`/user/${data.username}`))
+            .then(cred => history.push(`/user/${formData.username}`))
+            .then(() => console.log("hello from signing in")) // cahnge the user status to "user/loggedIn"
         })
-        // .then(cred => history.push(`/user/${formData.username}`))
         .catch((error) => console.error("A problem occurred while logging in.", error))
         
         setFormData(initialFormData)

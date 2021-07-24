@@ -36,20 +36,20 @@ export const fetchUpdatedUsers = () => {
 // }
 
 const initialState = {
-    status: "", // loading or loaded, updating or updated
+    status: "", // users/loading or users/loaded, users/updating or users/updated
     usersArray: []
 };
 
 const usersReducer = (state = initialState, action) => {
     switch(action.type) {
         case "users/loading": 
-            return { ...state, status: "loading"};
+            return { ...state, status: "users/loading"};
  
         case "users/loaded":
             return { ...state, usersArray: action.payload }; // payload is gonna be an array of user objects
 
         case "users/updating":
-            return { ...state, status: "updating" };
+            return { ...state, status: "users/updating" };
         
         case "users/updated":
             return { ...state, usersArray: action.payload }; // payload is gonna be an array of updated user objects

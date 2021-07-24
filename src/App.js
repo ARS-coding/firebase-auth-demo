@@ -1,5 +1,11 @@
 //react
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+
+// react-redux
+import { useSelector, useDispatch } from "react-redux";
+
+// action creator functions
+import { checkIfUserSignedIn } from "./components/Users/User/userSlice";
 
 // components
 import SignUp from "./components/SignUp";
@@ -21,10 +27,13 @@ import { auth } from "./firebase";
 
 function App() {
 
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const dispatch = useDispatch(); 
+  useEffect(() => {
+    dispatch(checkIfUserSignedIn());
+  }, [dispatch]);
 
-  auth.onAuthStateChanged( user => user ? setIsSignedIn(true) : setIsSignedIn(false) );
-
+  const userStatus = useSelector(state => state.user.status);
+  console.log(userStatus)
   return (
       <Container style={{minHeight: "100vh"}}>
         <Router>
@@ -43,11 +52,12 @@ function App() {
             </Route>
 
             <Route exact strict path="/users">
-              <Users />
+              <Users /> {/* add conditional rendering like the user/:username path */}
             </Route>
 
             <Route exact strict path="/user/:username">
-              {isSignedIn ? <User /> : <PleaseSignIn />} 
+              {userStatus === "user/checked/loggedIn" && <User />} 
+              {userStatus === "user/checked/loggedOut" && <PleaseSignIn />}
             </Route>
           </Switch>
         </Router>

@@ -1,13 +1,12 @@
 // firebase
 import { auth } from "../../../firebase";
 
-export const checkIfUserSignedIn = () => {
-    return (dispatch) => {
-        dispatch({ type: "user/checking" })
-        // auth.onAuthStateChanged(user => {
-        //     return user ? dispatch({ type: "user/checked/loggedIn" }) : dispatch({ type: "user/checked/loggedOut" }); 
-        // })
 
+
+export const checkIfUserSignedIn = () => {
+    return async (dispatch) => {
+        await dispatch({ type: "user/checking" });
+        dispatch({ type: "user/checked", paylaod: auth.currentUser }); 
     }
 }
 
@@ -22,27 +21,27 @@ const initialState = {
     user: null // user prop is gonna have a user object if a user is signed in
 }
 
-const userSlice = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch(action.type) {
         case "user/checking":
-            return { ...state, status: "checking" };
+            return { ...state, status: "user/checking" };
         
-        case "user/checked": 
+        case "user/checked":
             if (action.payload) { // payload is gonna be the user's auth object or null
-                return { ...state, status : "checked/loggedIn" } 
+                return { ...state, status : "user/checked/loggedIn" } 
             } else {
-                return { ...state, status: "checked/loggedOut" }
+                return { ...state, status: "user/checked/loggedOut" }
             }
 
         case "user/loading": // fetching the signed in user's data from firestore
-            return { ...state, status: "loading" };
+            return { ...state, status: "user/loading" };
 
         case "user/loaded": 
-            return { ...state, status: "loaded", user: action.payload } // payload is the user object that lives in the users collection of firestore
+            return { ...state, status: "user/loaded", user: action.payload } // payload is the user object that lives in the users collection of firestore
         
         default:
             return state;
     } // also do sing in and out here
 }
 
-export default userSlice;
+export default userReducer;
