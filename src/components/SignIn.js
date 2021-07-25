@@ -7,27 +7,23 @@ import { Form, Button, Card, Container } from "react-bootstrap";
 // router
 import { Link, useHistory } from "react-router-dom";
 
-// firebase
-import { auth, firestore } from "../firebase";
+// action creator functions
+import { signInAndGetUserObjectFromFirestore } from "./Users/User/userSlice";
+
+// react-redux
+import { useDispatch } from "react-redux";
 
 function SignIn() {
 
+    const dispatch = useDispatch();
+
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);
-    let history = useHistory();
 
-    async function handleFormSubmit(event) {
+    function handleFormSubmit(event) {
         event.preventDefault();
-        // await sign in here and then contnue
-        auth.signInWithEmailAndPassword(formData.email, formData.password)
-        .then(cred => {
-            firestore.collection("users").where("email", "==", cred.user.email).get()
-            .then(snapshot => snapshot.docs[0].data())
-            .then(cred => history.push(`/user/${formData.username}`))
-            .then(() => console.log("hello from signing in")) // cahnge the user status to "user/loggedIn"
-        })
-        .catch((error) => console.error("A problem occurred while logging in.", error))
-        
+//WHENEVER USER SIGNS IN MAKE A DISPATCH AND CHANGE THE STATE'S USER AND STATUS PROPS. CHANGE STATUS TO MAKE CONDITIONAL RENDERING, CHANGE USER TO USE THE USER'S INFO IN THE FUTURE
+        dispatch(signInAndGetUserObjectFromFirestore(formData)); // whenever user signs in
         setFormData(initialFormData)
     }
 

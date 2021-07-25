@@ -56,8 +56,11 @@ function App() {
             </Route>
 
             <Route exact strict path="/user/:username">
-              {userStatus === "user/checked/loggedIn" && <User />} 
-              {userStatus === "user/checked/loggedOut" && <PleaseSignIn />}
+              {userStatus === "user/signingIn" && <h1 className="text-center">Signing In...</h1>}
+              {userStatus === "user/checked/signedIn" | userStatus === "user/signedIn" && <User />}
+
+              {userStatus === "user/signingOut" && <h1 className="text-center">Signing Out...</h1>}
+              {userStatus === "user/checked/signedOut" | userStatus === "user/signedOut" && <PleaseSignIn />}
             </Route>
           </Switch>
         </Router>

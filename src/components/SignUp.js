@@ -24,15 +24,15 @@ function SignUp() {
         event.preventDefault();
 
         if (formData.password === formData.passwordConfirmation) {
-            setDocument(formData.username, removeOneProp(formData, "passwordConfirmation"));
+            setDocument(formData.username, removeOneProp(formData, "passwordConfirmation")); // first argument is the name of the document that we are gonna set, second one is the object that we are gonna sign to that document
 
-            auth.createUserWithEmailAndPassword(formData.email, formData.password)
+            auth.createUserWithEmailAndPassword(formData.email, formData.password) // all the auth logic lives in the 
             .then(cred => history.push(`/user/${formData.username}`))
-            .catch((error) => console.error("A problem occured while your accunt being created!", error));
+            .catch((error) => console.error("A problem occured while your account being created!", error));
         } else {
             console.log("Passwords are not the same.");
         }
-        setFormData(initialFormData)
+        setFormData(initialFormData); // empty the form fields
     }
 
     function handleFormChange(event) {

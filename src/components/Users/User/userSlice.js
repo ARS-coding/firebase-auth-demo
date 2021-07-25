@@ -1,47 +1,72 @@
 // firebase
-import { auth } from "../../../firebase";
+import { auth, firestore } from "../../../firebase";
 
+// router 
+import { useHistory } from "react-router-dom";
 
-
-export const checkIfUserSignedIn = () => {
+export const checkIfUserSignedIn = () => { // it checks if the user is signed in or not for once, it doesn't listen it everytime
     return async (dispatch) => {
         await dispatch({ type: "user/checking" });
         dispatch({ type: "user/checked", paylaod: auth.currentUser }); 
     }
 }
 
-export const getCurrentUserFromFirestore = () => {
-    return (dispatch) => {
-        dispatch({ type: "user/loading" });
+export const signInAndGetUserObjectFromFirestore = (formData) => { // sign in and assign the signed in user's object to user prop of state
+    return async (dispatch) => {
+        let history = useHistory();
+
+        await dispatch({ type: "user/signingIn" });
+        auth.signInWithEmailAndPassword(formData.email, formData.password)
+        .catch(error => console.error("A problem occurred while logging in.", error))
+
+        firestore.collection("users").where("email", "==", formData.email).get()
+        .then(snapshot => snapshot.docs[0].data())
+        .then(userObject => dispatch({ type: "user/singedIn", payload: userObject }))
+        .then(() => history.push(`/user/${formData.username}`)) // go to the user page
     }
 }
 
+export const signOut = () => {
+    return (dispatch) => {
+        dispatch({ type: "user/signingOut" }) // change the status
+        auth.signOut()
+        .then(() => dispatch({ type: "user/signedOut" })) // change status, empty the user object
+        .catch((error) => console.error("A problem occurred while logging out.", error))
+    }
+} 
+
 const initialState = { 
-    status: "", // checking or checked, loading or loaded
+    status: "", // user/checking | user/checked/signedOut or user/checked/signedIn | user/signingOut or user/signedOut | user/signingOut or user/signedOut
     user: null // user prop is gonna have a user object if a user is signed in
 }
 
 const userReducer = (state = initialState, action) => {
     switch(action.type) {
         case "user/checking":
-            return { ...state, status: "user/checking" };
+            return { ...state, status: "user/checking" }; // starting to check of a user is signed in at the time
         
         case "user/checked":
             if (action.payload) { // payload is gonna be the user's auth object or null
-                return { ...state, status : "user/checked/loggedIn" } 
+                return { ...state, status : "user/checked/signedIn" } // return this if a user is signed in
             } else {
-                return { ...state, status: "user/checked/loggedOut" }
+                return { ...state, status: "user/checked/signedOut" } // return this if there's no user signed in
             }
 
-        case "user/loading": // fetching the signed in user's data from firestore
-            return { ...state, status: "user/loading" };
+        case "user/signingIn":
+            return { ...state, status: "user/signingIn" };
 
-        case "user/loaded": 
-            return { ...state, status: "user/loaded", user: action.payload } // payload is the user object that lives in the users collection of firestore
-        
+        case "user/signedIn": // assign the found user object to the use property in state
+            return { ...state, status: "user/signedIn", user: action.payload }; // payload is the user object in firestore users collection
+
+        case "user/signingOut":
+            return { ...state, status: "user/signingOut" };
+
+        case "user/signedOut":
+            return { ...state, status: "user/signedOut", user: null };
+
         default:
             return state;
-    } // also do sing in and out here
+    }
 }
 
 export default userReducer;

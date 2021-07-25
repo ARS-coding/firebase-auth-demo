@@ -1,7 +1,7 @@
 // firestore
 import { firestore } from "../../firebase";
 
-export const fetchUsers = () => { // being dispatched whenever app component mounts
+export const fetchUsers = () => { // dipatched whenever users component mounts for once, gets the current users in the firestore
     return (dispatch) => {
         dispatch({ type: "users/loading" });    
         firestore.collection("users").get()
@@ -12,7 +12,7 @@ export const fetchUsers = () => { // being dispatched whenever app component mou
     }
 }
 
-export const fetchUpdatedUsers = () => {
+export const fetchUpdatedUsers = () => { // listen for the changes of the collection named "users" in firestore
     return (dispatch) => {
         dispatch({ type: "users/updating" });    
         firestore.collection("users").onSnapshot(querySnapshot => {
@@ -21,19 +21,6 @@ export const fetchUpdatedUsers = () => {
         })
     }
 }
-
-// export const signIn = (email) => {
-//     return {
-//         type: "user/signIn",
-//         payload: email
-//     }
-// }
-
-// export const signOut = () => {
-//     return {
-//         type: "user/signOut"
-//     }
-// }
 
 const initialState = {
     status: "", // users/loading or users/loaded, users/updating or users/updated
@@ -52,16 +39,11 @@ const usersReducer = (state = initialState, action) => {
             return { ...state, status: "users/updating" };
         
         case "users/updated":
-            return { ...state, usersArray: action.payload }; // payload is gonna be an array of updated user objects
+            return { ...state, status: "users/updated", usersArray: action.payload }; // payload is gonna be an array of updated user objects
 
         default:
             return state;
         }
-        // case "user/signIn":
-        //     return { ...state, email: action.payload }; // payload is email of the user
-
-        // case "user/signOut":
-        //     return { ...initialState };
 }
 
 export default usersReducer;
