@@ -23,9 +23,6 @@ import { Container } from "react-bootstrap";
 // router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-// firebase
-import { auth } from "./firebase";
-
 function App() {
 
   const dispatch = useDispatch(); 
@@ -34,7 +31,8 @@ function App() {
   }, [dispatch]);
 
   const userStatus = useSelector(state => state.user.status);
-  // console.log(userStatus)
+  console.log(userStatus) // for tracking if user is signing in, signed in or signing out, signed out
+
   return (
       <Container style={{minHeight: "100vh"}}>
         <Router>

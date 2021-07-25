@@ -11,14 +11,11 @@ import { Link, useHistory } from "react-router-dom";
 import { signInAndGetUserObjectFromFirestore } from "./Users/User/userSlice";
 
 // react-redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function SignIn() {
 
     let history = useHistory();
-    const userStatus = useSelector(state => state.user.status);
-    console.log(userStatus)
-
     const dispatch = useDispatch();
 
     const initialFormData = { email: "", password: "" };

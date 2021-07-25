@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 // action creator functions
 import { signOut } from "./Users/User/userSlice";
 
+// router
+import { Link } from "react-router-dom";
 
 function SigningOutWarning() {
 
@@ -23,8 +25,8 @@ function SigningOutWarning() {
         <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "80vh"}}>
             <h1>Are you <span className="text-decoration-underline">sure</span> that you wanna sign out?</h1>
             <div className="d-flex justify-content-around w-100">
-                <button onClick={handleSignOut}>Yes</button>
-                <button>No</button>
+                <Link onClick={handleSignOut} to="/">Yes</Link>
+                <Link>No</Link>
             </div>
         </Container>
     )

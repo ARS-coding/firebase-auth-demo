@@ -1,9 +1,6 @@
 // firebase
 import { auth, firestore } from "../../../firebase";
 
-// router 
-import { useHistory } from "react-router-dom";
-
 export const checkIfUserSignedIn = () => { // it checks if the user is signed in or not for once, it doesn't listen it everytime
     return async (dispatch) => {
         await dispatch({ type: "user/checking" });
@@ -13,19 +10,15 @@ export const checkIfUserSignedIn = () => { // it checks if the user is signed in
 
 export const signInAndGetUserObjectFromFirestore = (formData, history) => { // sign in and assign the signed in user's object to user prop of state
     return async (dispatch) => {
-        // let history = useHistory();
-
         dispatch({ type: "user/signingIn" });
         await auth.signInWithEmailAndPassword(formData.email, formData.password)
         .then(cred => {
             firestore.collection("users").where("email", "==", cred.user.email).get()
             .then(snapshot => snapshot.docs[0].data())
             .then(userObject => {dispatch({ type: "user/singedIn", payload: userObject }); return userObject})
-            .then(userObject => history.push(`/user/${userObject.username}`))
+            .then(userObject => history.push(`/user/${userObject.username}`)) // pass history that has useHistory() inside instad of tyring to use the useHistory hook inside this slice file because hooks only can be used in components
         })
         .catch(error => console.error("A problem occurred while logging in.", error))
-        
-        // .then(() => history.push(`/user/${formData.username}`)) // go to the user page
     }
 }
 
