@@ -11,9 +11,13 @@ import { Link, useHistory } from "react-router-dom";
 import { signInAndGetUserObjectFromFirestore } from "./Users/User/userSlice";
 
 // react-redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function SignIn() {
+
+    let history = useHistory();
+    const userStatus = useSelector(state => state.user.status);
+    console.log(userStatus)
 
     const dispatch = useDispatch();
 
@@ -22,9 +26,10 @@ function SignIn() {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-//WHENEVER USER SIGNS IN MAKE A DISPATCH AND CHANGE THE STATE'S USER AND STATUS PROPS. CHANGE STATUS TO MAKE CONDITIONAL RENDERING, CHANGE USER TO USE THE USER'S INFO IN THE FUTURE
-        dispatch(signInAndGetUserObjectFromFirestore(formData)); // whenever user signs in
-        setFormData(initialFormData)
+        dispatch(signInAndGetUserObjectFromFirestore(formData, history))
+        // .then(() => console.log("dispatch has ended."))
+        
+        setFormData(initialFormData);
     }
 
     function handleFormChange(event) {

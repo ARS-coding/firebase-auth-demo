@@ -15,6 +15,7 @@ import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar/NavBar";
 import PleaseSignIn from "./components/PleaseSignIn/PleaseSignIn";
 import Users from "./components/Users/Users";
+import SigningOutWarning from "./components/SigningOutWarning";
 
 // bootstrap
 import { Container } from "react-bootstrap";
@@ -33,7 +34,7 @@ function App() {
   }, [dispatch]);
 
   const userStatus = useSelector(state => state.user.status);
-  console.log(userStatus)
+  // console.log(userStatus)
   return (
       <Container style={{minHeight: "100vh"}}>
         <Router>
@@ -56,11 +57,15 @@ function App() {
             </Route>
 
             <Route exact strict path="/user/:username">
-              {userStatus === "user/signingIn" && <h1 className="text-center">Signing In...</h1>}
-              {userStatus === "user/checked/signedIn" | userStatus === "user/signedIn" && <User />}
+              {userStatus === "user/signingIn" ? <h1 className="text-center">Signing In...</h1> : null}
+              {userStatus === "user/checked/signedIn" | userStatus === "user/signedIn" ? <User /> : null}
 
-              {userStatus === "user/signingOut" && <h1 className="text-center">Signing Out...</h1>}
-              {userStatus === "user/checked/signedOut" | userStatus === "user/signedOut" && <PleaseSignIn />}
+              {userStatus === "user/signingOut" ? <h1 className="text-center">Signing Out...</h1> : null}
+              {userStatus === "user/checked/signedOut" | userStatus === "user/signedOut" ? <PleaseSignIn /> : null}
+            </Route>
+
+            <Route exact strict path="/signing-out-warning">
+              <SigningOutWarning />
             </Route>
           </Switch>
         </Router>

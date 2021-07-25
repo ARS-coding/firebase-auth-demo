@@ -11,18 +11,21 @@ export const checkIfUserSignedIn = () => { // it checks if the user is signed in
     }
 }
 
-export const signInAndGetUserObjectFromFirestore = (formData) => { // sign in and assign the signed in user's object to user prop of state
+export const signInAndGetUserObjectFromFirestore = (formData, history) => { // sign in and assign the signed in user's object to user prop of state
     return async (dispatch) => {
-        let history = useHistory();
+        // let history = useHistory();
 
-        await dispatch({ type: "user/signingIn" });
-        auth.signInWithEmailAndPassword(formData.email, formData.password)
+        dispatch({ type: "user/signingIn" });
+        await auth.signInWithEmailAndPassword(formData.email, formData.password)
+        .then(cred => {
+            firestore.collection("users").where("email", "==", cred.user.email).get()
+            .then(snapshot => snapshot.docs[0].data())
+            .then(userObject => {dispatch({ type: "user/singedIn", payload: userObject }); return userObject})
+            .then(userObject => history.push(`/user/${userObject.username}`))
+        })
         .catch(error => console.error("A problem occurred while logging in.", error))
-
-        firestore.collection("users").where("email", "==", formData.email).get()
-        .then(snapshot => snapshot.docs[0].data())
-        .then(userObject => dispatch({ type: "user/singedIn", payload: userObject }))
-        .then(() => history.push(`/user/${formData.username}`)) // go to the user page
+        
+        // .then(() => history.push(`/user/${formData.username}`)) // go to the user page
     }
 }
 
@@ -55,7 +58,7 @@ const userReducer = (state = initialState, action) => {
         case "user/signingIn":
             return { ...state, status: "user/signingIn" };
 
-        case "user/signedIn": // assign the found user object to the use property in state
+        case "user/singedIn": // assign the found user object to the use property in state
             return { ...state, status: "user/signedIn", user: action.payload }; // payload is the user object in firestore users collection
 
         case "user/signingOut":
