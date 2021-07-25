@@ -37,7 +37,7 @@ function SignUp() {
             auth.createUserWithEmailAndPassword(formData.email, formData.password) // all the auth logic lives in the 
             .then(() => checkIfUserSignedIn())
             .then(() => console.log("user status:", userStatus))
-            .then(cred => history.push(`/user/${formData.username}`))
+            .then(cred => history.push(`/profile/${formData.username}`))
             .catch((error) => console.error("A problem occured while your account being created!", error));
         } else {
             console.log("Passwords are not the same.");

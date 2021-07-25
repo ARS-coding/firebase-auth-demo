@@ -1,5 +1,5 @@
 // react
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // bootstrap
 import { Form, Button, Card, Container } from "react-bootstrap";
@@ -20,13 +20,11 @@ function SignIn() {
 
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);
+    let setFormDataPointer = setFormData; // set this variable to use hooks inside userSlice
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        dispatch(signInAndGetUserObjectFromFirestore(formData, history))
-        // .then(() => console.log("dispatch has ended."))
-        
-        setFormData(initialFormData);
+        dispatch(signInAndGetUserObjectFromFirestore(formData, history, setFormDataPointer, initialFormData))
     }
 
     function handleFormChange(event) {

@@ -11,10 +11,11 @@ import { useDispatch } from "react-redux";
 import { signOut } from "./Users/User/userSlice";
 
 // router
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function SigningOutWarning() {
 
+    const history = useHistory();
     const dispatch = useDispatch();
 
     function handleSignOut() {
@@ -26,7 +27,7 @@ function SigningOutWarning() {
             <h1>Are you <span className="text-decoration-underline">sure</span> that you wanna sign out?</h1>
             <div className="d-flex justify-content-around w-100">
                 <Link onClick={handleSignOut} to="/">Yes</Link>
-                <Link>No</Link>
+                <Link to="/">No</Link>
             </div>
         </Container>
     )

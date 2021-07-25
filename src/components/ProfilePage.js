@@ -7,12 +7,14 @@ import { useParams } from "react-router-dom";
 // bootstrap
 import { Container, Row, Col } from "react-bootstrap";
 
-function User() {
+function ProfilePage() {
+
+    // const hey = useParams() // use this to build paths on top of the /profile/:username such as /profile/:username/friends/:friendname 
 
     const userName = useParams().username;
 
     return (
-        <>
+        <Container className="justify-content-start align-items-center container-after-the-navbar" style={{minHeight: "80vh"}}>
             <h1>Welcome, {userName}!</h1>
             <Container>
                 <Row>
@@ -20,8 +22,8 @@ function User() {
                     <Col></Col>
                 </Row>
             </Container>
-        </>
+        </Container>
     )
 }
 
-export default User
+export default ProfilePage

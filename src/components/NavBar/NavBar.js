@@ -13,11 +13,29 @@ import { Link } from "react-router-dom";
 function NavBar() {
 
     const userStatus = useSelector(state => state.user.status); // use it to dispay sign in or sign out button
+    const userObject = useSelector(state => state.user.userObject); // use it to display the current user's profile
     
     return (
-        <Nav className="navbar">
+        <Nav className="navbar" style={{ height: "20vh" }}>
             <Nav.Item>
                 <Link to="/">Home</Link>
+                {
+                    userStatus === "user/checked/signedIn" | userStatus === "user/signedIn" 
+                    ? // if the user is signed in the userObject is not gonna be null
+                    <Link 
+                        to={ 
+                            userObject !== null 
+                            ?
+                            {pathname: `/profile/${userObject.username}`}
+                            :
+                            {pathname: "/please-sign-in"} 
+                        }
+                    >
+                        Profile
+                    </Link>
+                    :
+                    null
+                }
             </Nav.Item>
             <Nav.Item>
                 {

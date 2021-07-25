@@ -8,7 +8,7 @@ export const checkIfUserSignedIn = () => { // it checks if the user is signed in
     }
 }
 
-export const signInAndGetUserObjectFromFirestore = (formData, history) => { // sign in and assign the signed in user's object to user prop of state
+export const signInAndGetUserObjectFromFirestore = (formData, history, setFormDataPointer, initialFormData) => { // sign in and assign the signed in user's object to user prop of state
     return async (dispatch) => {
         dispatch({ type: "user/signingIn" });
         await auth.signInWithEmailAndPassword(formData.email, formData.password)
@@ -16,7 +16,8 @@ export const signInAndGetUserObjectFromFirestore = (formData, history) => { // s
             firestore.collection("users").where("email", "==", cred.user.email).get()
             .then(snapshot => snapshot.docs[0].data())
             .then(userObject => {dispatch({ type: "user/singedIn", payload: userObject }); return userObject})
-            .then(userObject => history.push(`/user/${userObject.username}`)) // pass history that has useHistory() inside instad of tyring to use the useHistory hook inside this slice file because hooks only can be used in components
+            .then(() => setFormDataPointer(initialFormData)) // empty the form fields only when user successfully signs in before unmounting the SignIn page and goin to the user's profile path
+            .then(userObject => history.push(`/profile/${userObject.username}`)) // pass history that has useHistory() inside instad of tyring to use the useHistory hook inside this slice file because hooks only can be used in components
         })
         .catch(error => console.error("A problem occurred while logging in.", error))
     }
@@ -33,7 +34,7 @@ export const signOut = () => {
 
 const initialState = { 
     status: "", // user/checking | user/checked/signedOut or user/checked/signedIn | user/signingOut or user/signedOut | user/signingOut or user/signedOut
-    user: null // user prop is gonna have a user object if a user is signed in
+    userObject: null // user prop is gonna have a user object if a user is signed in
 }
 
 const userReducer = (state = initialState, action) => {
@@ -59,6 +60,8 @@ const userReducer = (state = initialState, action) => {
 
         case "user/signedOut":
             return { ...state, status: "user/signedOut", user: null };
+
+        // add the cases for user "user/signingUp" and "user/signedUp"
 
         default:
             return state;
