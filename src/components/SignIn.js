@@ -11,10 +11,11 @@ import { Link, useHistory } from "react-router-dom";
 import { signIn } from "./Users/User/userSlice";
 
 // react-redux
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function SignIn() {
 
+    const isSignedIn = useSelector(state => state.user.isSignedIn);
     let history = useHistory();
     const dispatch = useDispatch();
 
@@ -23,7 +24,7 @@ function SignIn() {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        dispatch(signIn(formData, history))
+        isSignedIn ? dispatch(signIn(formData, history)) : console.log("You are already signed in!");
     }
 
     function handleFormChange(event) {

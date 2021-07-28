@@ -11,11 +11,11 @@ function ProfilePage() {
 
     // const hey = useParams() // use this to build paths on top of the /profile/:username such as /profile/:username/friends/:friendname 
 
-    const userName = useParams().username;
+    const uid = useParams().uid;
 
     return (
         <Container className="justify-content-start align-items-center container-after-the-navbar" style={{minHeight: "80vh"}}>
-            <h1>Welcome, {userName}!</h1>
+            <h1>Welcome, {uid}!</h1>
             <Container>
                 <Row>
                     <Col></Col>

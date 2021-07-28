@@ -32,13 +32,10 @@ function SignUp() {
         event.preventDefault();
 
         if (formData.password === formData.passwordConfirmation) {
-            setDocument(formData.username, removeOneProp(formData, "passwordConfirmation")); // first argument is the name of the document that we are gonna set, second one is the object that we are gonna sign to that document
-
-            auth.createUserWithEmailAndPassword(formData.email, formData.password) // all the auth logic lives in the 
-            // .then(() => checkIfUserSignedIn())
-            .then(() => console.log("user status:", userStatus))
-            .then(cred => history.push(`/profile/${formData.username}`))
-            .catch((error) => console.error("A problem occured while your account being created!", error));
+            auth.createUserWithEmailAndPassword(formData.email, formData.password) 
+            .then(userCred => setDocument(userCred.user.uid, removeOneProp(formData, "passwordConfirmation")))
+            .catch(error => console.error("A problem occured while your account being created!", error));
+            // .then(cred => history.push(`/profile/${cred.user.UID}`))
         } else {
             console.log("Passwords are not the same.");
         }
