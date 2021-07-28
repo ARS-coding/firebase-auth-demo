@@ -1,5 +1,5 @@
 // react
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 // bootstrap
 import { Form, Button, Card, Container } from "react-bootstrap";
@@ -8,7 +8,7 @@ import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 
 // action creator functions
-import { signInAndGetUserObjectFromFirestore } from "./Users/User/userSlice";
+import { signIn } from "./Users/User/userSlice";
 
 // react-redux
 import { useDispatch } from "react-redux";
@@ -20,11 +20,10 @@ function SignIn() {
 
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);
-    let setFormDataPointer = setFormData; // set this variable to use hooks inside userSlice
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        dispatch(signInAndGetUserObjectFromFirestore(formData, history, setFormDataPointer, initialFormData))
+        dispatch(signIn(formData, history))
     }
 
     function handleFormChange(event) {

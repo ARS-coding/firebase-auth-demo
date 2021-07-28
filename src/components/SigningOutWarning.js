@@ -27,9 +27,9 @@ function SigningOutWarning() {
             <h1>Are you <span className="text-decoration-underline">sure</span> that you wanna sign out?</h1>
             <div className="d-flex justify-content-around w-100">
                 <Link onClick={handleSignOut} to="/">Yes</Link>
-                <Link to="/">No</Link>
+                <Link to="/">No</Link> 
             </div>
-        </Container>
+        </Container> // whenever they select no, redirect them to the previous page with useHistory
     )
 }
 

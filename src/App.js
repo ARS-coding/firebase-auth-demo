@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // action creator functions
-import { checkIfUserSignedIn } from "./components/Users/User/userSlice";
 
 // components
 import SignUp from "./components/SignUp";
@@ -28,22 +27,15 @@ import { auth } from "./firebase";
 
 function App() {
   
-  const userStatus = useSelector(state => state.user.status);
-  console.log("user status: ", userStatus) // for tracking if user is signing in, signed in or signing out, signed out
-  
   const isSignedIn = useSelector(state => state.user.isSignedIn);
-  console.log("isSignedIn: ", isSignedIn);
-
   const dispatch = useDispatch(); 
+
   useEffect(() => {
-    // isSignedIn ? 
     auth.onAuthStateChanged(user => {
       user ? console.log("a user is currently signed in!") : console.log("there's no user signed in.")
-      user ? dispatch({ type: "signedIn" }) : dispatch({ type: "notSignedIn" });
-      // dispatch(checkIfUserSignedIn(user));
+      user ? dispatch({ type: "signedIn" }) : dispatch({ type: "notSignedIn" }); // set the isSignedIn prop on the redux state to hand with contidional rendering
     })
   }, [dispatch])
-  
 
   return (
       <Container style={{minHeight: "100vh"}}>
