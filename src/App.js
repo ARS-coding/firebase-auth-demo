@@ -27,18 +27,23 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 
 function App() {
-
-  auth.onAuthStateChanged(user => {
-    user ? console.log("a user is currently signed in!") : console.log("there's no user signed in.")
-  })
+  
+  const userStatus = useSelector(state => state.user.status);
+  console.log("user status: ", userStatus) // for tracking if user is signing in, signed in or signing out, signed out
+  
+  const isSignedIn = useSelector(state => state.user.isSignedIn);
+  console.log("isSignedIn: ", isSignedIn);
 
   const dispatch = useDispatch(); 
   useEffect(() => {
-    dispatch(checkIfUserSignedIn());
-  }, [dispatch]);
-
-  const userStatus = useSelector(state => state.user.status);
-  console.log(userStatus) // for tracking if user is signing in, signed in or signing out, signed out
+    // isSignedIn ? 
+    auth.onAuthStateChanged(user => {
+      user ? console.log("a user is currently signed in!") : console.log("there's no user signed in.")
+      user ? dispatch({ type: "signedIn" }) : dispatch({ type: "notSignedIn" });
+      // dispatch(checkIfUserSignedIn(user));
+    })
+  }, [dispatch])
+  
 
   return (
       <Container style={{minHeight: "100vh"}}>
@@ -62,11 +67,8 @@ function App() {
             </Route>
 
             <Route exact strict path="/profile/:username">
-              {userStatus === "user/signingIn" ? <h1 className="text-center">Signing In...</h1> : null}
-              {userStatus === "user/checked/signedIn" | userStatus === "user/signedIn" ? <ProfilePage /> : null}
-
-              {userStatus === "user/signingOut" ? <h1 className="text-center">Signing Out...</h1> : null}
-              {userStatus === "user/checked/signedOut" | userStatus === "user/signedOut" ? <PleaseSignIn /> : null}
+              {isSignedIn && <ProfilePage />} 
+              {isSignedIn && <PleaseSignIn />}
             </Route>
 
             <Route exact strict path="/signing-out-warning">

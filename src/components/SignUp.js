@@ -15,7 +15,7 @@ import { setDocument } from "../hooks/setUserDocument";
 import { removeOneProp } from "../hooks/removeOneProp";
 
 // action creator functions
-import { checkIfUserSignedIn } from "./Users/User/userSlice";
+// import { checkIfUserSignedIn } from "./Users/User/userSlice";
 
 // react-redux
 import { useSelector } from "react-redux";
@@ -35,7 +35,7 @@ function SignUp() {
             setDocument(formData.username, removeOneProp(formData, "passwordConfirmation")); // first argument is the name of the document that we are gonna set, second one is the object that we are gonna sign to that document
 
             auth.createUserWithEmailAndPassword(formData.email, formData.password) // all the auth logic lives in the 
-            .then(() => checkIfUserSignedIn())
+            // .then(() => checkIfUserSignedIn())
             .then(() => console.log("user status:", userStatus))
             .then(cred => history.push(`/profile/${formData.username}`))
             .catch((error) => console.error("A problem occured while your account being created!", error));
