@@ -32,13 +32,16 @@ function Users() {
 
     return (
         <Container className="users-container">
-            {usersStatus === "users/loading" && <h1>"Users are loading..."</h1>} 
-            {usersStatus === "users/updating" && <h1>"Users are updating..."</h1>} 
-            {usersStatus === "users/loaded" | usersStatus === "users/updated" && // if users are loaded or updated display the loaded or updated users
+            {usersStatus === "users/loading" ? <h1>"Users are loading..."</h1> : null} 
+            {usersStatus === "users/updating" ? <h1>"Users are updating..."</h1> : null} 
+            {usersStatus === "users/loaded" | usersStatus === "users/updated"  // if users are loaded or updated display the loaded or updated users
+                ?
                 <Row className="justify-content-center">
                     <h1 className="text-center">Here's all the users registered to this amazing web application!</h1>
                     {usersArray.map(userObject => <UserCard key={uuidv4()} userObject={userObject} />)}
                 </Row>
+                :
+                null
             }
         </Container>
     )

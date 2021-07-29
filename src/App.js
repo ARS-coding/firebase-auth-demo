@@ -1,3 +1,5 @@
+import "./main.css";
+
 //react
 import React, { useEffect } from "react";
 

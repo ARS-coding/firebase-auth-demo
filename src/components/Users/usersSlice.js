@@ -7,7 +7,7 @@ export const fetchUsers = () => { // dipatched whenever users component mounts f
         firestore.collection("users").get()
         .then(snapshot => {
             const arrayOfUserObjects = snapshot.docs.map(doc => doc.data());
-            dispatch({ type: "users/loading", payload: arrayOfUserObjects });
+            dispatch({ type: "users/loaded", payload: arrayOfUserObjects });
         });
     }
 }

@@ -16,10 +16,11 @@ function NavBar() {
     const isSignedIn = useSelector(state => state.user.isSignedIn);
     
     return (
-        <Nav className="navbar" style={{ height: "20vh" }}>
+        <Nav className="navbar" style={{ height: "10vh" }}>
             <Nav.Item>
-                <Link to="/">Home</Link>
-                <Link 
+                <Link to="/" className="me-4">Home</Link>
+                <Link
+                    className="me-4"
                     to={ 
                         isSignedIn 
                         ? 
@@ -28,6 +29,7 @@ function NavBar() {
                         {pathname: "/please-sign-in"}
                     }
                 >Profile</Link>
+                <Link to="/users">Users</Link>
             </Nav.Item>
             <Nav.Item>
                 {isSignedIn && <Link to="/signing-out-warning">Sign Out</Link>}

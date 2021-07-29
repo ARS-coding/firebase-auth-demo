@@ -13,20 +13,20 @@ import { auth } from "../firebase";
 function SigningOutWarning() {
 
     const history = useHistory();
-
+    
     function handleSignOut() {
         auth.signOut()
         .catch((error) => console.error("A problem occurred while logging out.", error))
     }
 
     return (
-        <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "80vh"}}>
+        <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "90vh"}}>
             <h1>Are you <span className="text-decoration-underline">sure</span> that you wanna sign out?</h1>
             <div className="d-flex justify-content-around w-100">
                 <Link onClick={handleSignOut} to="/">Yes</Link>
-                <Link to="/">No</Link> 
+                <span onClick={() => history.goBack()} style={{color: "#0a58ca"}}>No</span>
             </div>
-        </Container> // whenever they select no, redirect them to the previous page with useHistory
+        </Container>
     )
 }
 

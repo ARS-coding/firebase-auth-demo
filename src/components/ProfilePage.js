@@ -14,7 +14,7 @@ function ProfilePage() {
     const uid = useParams().uid;
 
     return (
-        <Container className="justify-content-start align-items-center container-after-the-navbar" style={{minHeight: "80vh"}}>
+        <Container className="justify-content-start align-items-center container-after-the-navbar" style={{minHeight: "90vh"}}>
             <h1>Welcome, {uid}!</h1>
             <Container>
                 <Row>

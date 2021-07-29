@@ -45,7 +45,7 @@ function SignUp() {
     }
 
     return (
-        <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "80vh"}}>
+        <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "90vh"}}>
             <Card style={{width: "30%"}} className="ml-3 m-auto m-3">
                 <Card.Body>
                     <h2 className="text-center">Sign Up</h2>
