@@ -6,14 +6,6 @@
     position: relative;
     background-color: hsl(253, 33%, 47%);
     color: wheat;
-    z-index: 0;
-}
-
-.user-card p { 
-    position: relative;
-    color: wheat;
-    transition: all ease-in-out 300ms;
-    z-index: 1;
 }
 
 .clip-path {
@@ -25,15 +17,15 @@
     left: 0;
     background-color: tomato;
     transition: all ease-in-out 300ms;
-    z-index: 2;
 }
 
 .user-card:hover .clip-path {
     clip-path: circle(75%);
     transition: all ease-in-out 300ms;
-    z-index: 1;
 }
  
-.user-card:hover p {
+.user-card:hover span {
     color: hsl(253, 33%, 47%);
+    transition: all ease-in-out 450ms;
+
 }
