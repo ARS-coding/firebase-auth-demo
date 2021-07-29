@@ -15,7 +15,7 @@ export const fetchUsers = () => { // dipatched whenever users component mounts f
 export const fetchUpdatedUsers = () => { // listen for the changes of the collection named "users" in firestore
     return (dispatch) => {
         dispatch({ type: "users/updating" });    
-        firestore.collection("users").onSnapshot(querySnapshot => {
+        return firestore.collection("users").onSnapshot(querySnapshot => {
             const arrayOfUserObjects = querySnapshot.docs.map(doc => doc.data());
             dispatch({ type: "users/updated", payload: arrayOfUserObjects }); // update the redux state with the fetched updated users
         })

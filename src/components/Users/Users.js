@@ -23,8 +23,11 @@ function Users() {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchUpdatedUsers()); // add the listener to the server for future changes just for once
+        const listener = dispatch(fetchUpdatedUsers()); // add the listener to the server for future changes just for once
         dispatch(fetchUsers()); // fetch the current users on the firestore for once 
+        return () => {
+            listener() // remove the onSnapShot listener
+        }
     }, [dispatch]);
 
     const usersArray = useSelector(state => state.users.usersArray); //  use this in the page that you are gonna show the registered users
