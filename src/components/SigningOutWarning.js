@@ -4,22 +4,19 @@ import React from 'react'
 // react-bootstrap
 import { Container } from "react-bootstrap";
 
-// react-redux
-import { useDispatch } from "react-redux";
-
-// action creator functions
-import { signOut } from "./Users/User/userSlice";
-
 // router
 import { Link, useHistory } from "react-router-dom";
+
+// firebase
+import { auth } from "../firebase";
 
 function SigningOutWarning() {
 
     const history = useHistory();
-    const dispatch = useDispatch();
 
     function handleSignOut() {
-        dispatch(signOut())
+        auth.signOut()
+        .catch((error) => console.error("A problem occurred while logging out.", error))
     }
 
     return (

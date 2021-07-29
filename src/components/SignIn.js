@@ -7,24 +7,30 @@ import { Form, Button, Card, Container } from "react-bootstrap";
 // router
 import { Link, useHistory } from "react-router-dom";
 
-// action creator functions
-import { signIn } from "./Users/User/userSlice";
-
 // react-redux
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
+// firebase
+import { auth } from "../firebase";
 
 function SignIn() {
 
-    const isSignedIn = useSelector(state => state.user.isSignedIn);
     let history = useHistory();
-    const dispatch = useDispatch();
+    const isSignedIn = useSelector(state => state.user.isSignedIn);
 
     const initialFormData = { email: "", password: "" };
     const [formData, setFormData] = useState(initialFormData);
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        isSignedIn ? dispatch(signIn(formData, history)) : console.log("You are already signed in!");
+        if(!isSignedIn) {
+            auth.signInWithEmailAndPassword(formData.email, formData.password)
+            .then(cred => history.push(`/profile/${cred.user.uid}`))
+            .catch(error => console.error("A problem occurred while logging in.", error))
+        }
+        else {
+            console.log("You are already signed in!");
+        }
     }
 
     function handleFormChange(event) {

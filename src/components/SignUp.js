@@ -4,42 +4,40 @@ import React, { useState } from 'react'
 // bootstrap
 import { Form, Button, Card, Container } from "react-bootstrap";
 
-// firebase
-import { auth } from "../firebase";
-
 // router
 import { Link, useHistory } from "react-router-dom";
 
-// custom hooks
-import { setDocument } from "../hooks/setUserDocument";
+// firebase 
+import { auth } from "../firebase";
+
+// cunstom hooks
 import { removeOneProp } from "../hooks/removeOneProp";
-
-// action creator functions
-// import { checkIfUserSignedIn } from "./Users/User/userSlice";
-
-// react-redux
-import { useSelector } from "react-redux";
+import { setUserDocument } from "../hooks/setUserDocument";
 
 function SignUp() {
 
-    let userStatus = useSelector(state => state.user.status);
-
     const initialFormData = { username: "", email: "", password: "", passwordConfirmation: "" };
     const [formData, setFormData] = useState(initialFormData);
+
     let history = useHistory();
 
     function handleFormSubmit(event) {
         event.preventDefault();
 
         if (formData.password === formData.passwordConfirmation) {
+            
+            const objWithoutPasswordConfigProp = removeOneProp(formData, "passwordConfirmation");
             auth.createUserWithEmailAndPassword(formData.email, formData.password) 
-            .then(userCred => setDocument(userCred.user.uid, removeOneProp(formData, "passwordConfirmation")))
+            .then(userCred => {
+                setUserDocument(userCred.user.uid, { ...objWithoutPasswordConfigProp, uid: userCred.user.uid })
+                return userCred;
+            }) // set the document in firestore
+            .then(userCred => history.push(`/profile/${userCred.user.uid}`)) // take the user to their profile
             .catch(error => console.error("A problem occured while your account being created!", error));
-            // .then(cred => history.push(`/profile/${cred.user.UID}`))
+            setFormData(initialFormData);
         } else {
             console.log("Passwords are not the same.");
         }
-        setFormData(initialFormData); // empty the form fields
     }
 
     function handleFormChange(event) {

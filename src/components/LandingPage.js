@@ -1,9 +1,6 @@
 // react
 import React from 'react'
 
-// router
-import { Link } from "react-router-dom";
-
 // react-redux
 import { useSelector } from "react-redux";
 

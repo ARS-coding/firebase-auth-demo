@@ -26,13 +26,15 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   
   const isSignedIn = useSelector(state => state.user.isSignedIn);
+  const userReduxState = useSelector(state => state.user);
   const dispatch = useDispatch(); 
   
   useEffect(() => {
     dispatch(listenForAuthChanges())
   }, [dispatch])
   
-  console.log(isSignedIn);
+  console.log("isSignedIn", isSignedIn);
+  console.log("userReduxState", userReduxState);
 
   return (
       <Container style={{minHeight: "100vh"}}>
@@ -56,7 +58,7 @@ function App() {
             </Route>
 
             <Route exact strict path="/profile/:uid">
-              {isSignedIn && <ProfilePage />} 
+              {isSignedIn && <ProfilePage />}
               {!isSignedIn && <PleaseSignIn />}
             </Route>
 
