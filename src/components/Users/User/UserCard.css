@@ -6,6 +6,8 @@
     position: relative;
     background-color: hsl(253, 33%, 47%);
     color: wheat;
+    transition: all ease-in-out 300ms;
+
 }
 
 .clip-path {

@@ -20,7 +20,7 @@ export const fetchUpdatedUsers = () => { // listen for the changes of the collec
             dispatch({ type: "users/updated", payload: arrayOfUserObjects }); // update the redux state with the fetched updated users
         })
     }
-}
+} // this listener is gonna be removed when Users component unmounts
 
 const initialState = {
     status: "", // users/loading or users/loaded, users/updating or users/updated

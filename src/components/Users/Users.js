@@ -4,9 +4,6 @@ import React, { useEffect } from 'react';
 // react-bootstrap
 import { Container, Row } from "react-bootstrap";
 
-// styles
-import "./Users.css";
-
 // react-redux
 import { useSelector, useDispatch } from "react-redux";
 
@@ -33,15 +30,25 @@ function Users() {
     const usersArray = useSelector(state => state.users.usersArray); //  use this in the page that you are gonna show the registered users
     const usersStatus = useSelector(state => state.users.status); //  use this in the page that you are gonna show the registered users
 
+    const styleObj = {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "space-between",
+        flexGrow: "0"
+    }
+
     return (
-        <Container className="users-container">
-            {usersStatus === "users/loading" ? <h1>"Users are loading..."</h1> : null} 
-            {usersStatus === "users/updating" ? <h1>"Users are updating..."</h1> : null} 
+        <Container fluid style={{minHeight: "90vh"}}>
+            {usersStatus === "users/loading" ? <h1 className="text-center">"Users are loading..."</h1> : null} 
+            {usersStatus === "users/updating" ? <h1 className="text-center">"Users are updating..."</h1> : null} 
             {usersStatus === "users/loaded" | usersStatus === "users/updated"  // if users are loaded or updated display the loaded or updated users
                 ?
                 <Row className="justify-content-center">
                     <h1 className="text-center">Here's all the users registered to this amazing web application!</h1>
-                    {usersArray.map(userObject => <UserCard key={uuidv4()} userObject={userObject} />)}
+                    <div className="test-div-container" style={styleObj}>
+                        {usersArray.map(userObject => <UserCard key={uuidv4()} userObject={userObject} />)}
+                    </div>
                 </Row>
                 :
                 null
