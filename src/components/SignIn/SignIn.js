@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 
 // bootstrap
-// import { Form, Button, Card, Container } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 
 // router
@@ -12,10 +11,13 @@ import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // firebase
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 // formik
 import { Formik, Form, Field, ErrorMessage } from "formik";
+
+// styles 
+import "./SignIn.css"
 
 function SignIn() {
 
@@ -73,7 +75,7 @@ function SignIn() {
             >
                 {({ isSubmitting }) => {
                     return (
-                        <Form>
+                        <Form className="sign-in-form">
                             <Field type="email" name="email" />
                             <ErrorMessage name="email" component="div" />
                             

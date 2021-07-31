@@ -10,8 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { listenForAuthChanges } from "./components/Users/User/userSlice";
 
 // components
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp/SignUp";
+import SignIn from "./components/SignIn/SignIn";
 import ProfilePage from "./components/ProfilePage";
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar/NavBar";

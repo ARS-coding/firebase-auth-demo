@@ -8,11 +8,11 @@ import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 
 // firebase 
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 // cunstom hooks
-import { removeOneProp } from "../hooks/removeOneProp";
-import { setUserDocument } from "../hooks/setUserDocument";
+import { removeOneProp } from "../../hooks/removeOneProp";
+import { setUserDocument } from "../../hooks/setUserDocument";
 
 function SignUp() {
 
