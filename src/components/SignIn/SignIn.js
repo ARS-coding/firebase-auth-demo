@@ -43,7 +43,8 @@ function SignIn() {
                     }
                     return errors;
                 }}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                    resetForm();
                     if (!isSignedIn) {
                         auth.signInWithEmailAndPassword(values.email, values.password)
                         .then(cred => history.push(`/profile/${cred.user.uid}`))
@@ -51,7 +52,7 @@ function SignIn() {
                         setSubmitting(false);
                     }
                     else if(isSignedIn) {
-                        setSubmitting(false)
+                        setSubmitting(false);
                         console.log("You are already signed in!");
                     }
                 }}
