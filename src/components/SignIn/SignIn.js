@@ -61,14 +61,14 @@ function SignIn() {
                     return (
                         <Form className="sign-in-form">
                             <h2 style={{textAlign: "center"}}>Sign In!</h2>
-                            <div class="mb-3">
-                                <label for="email" className="form-label">Email:</label>
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email:</label>
                                 <Field 
                                     type="email" 
                                     name="email" 
                                     id="email"
                                     className="form-control"
-                                    placeHolder="Your email..."
+                                    placeholder="Your email..."
                                 />
                                 <ErrorMessage 
                                     name="email"
@@ -77,14 +77,14 @@ function SignIn() {
                                     className="form-text"
                                 />
                             </div>
-                            <div class="mb-3">
-                                <label for="password" className="form-label">Password:</label>
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">Password:</label>
                                 <Field 
                                     type="password"
                                     name="password"
                                     id="password"
                                     className="form-control"
-                                    placeHolder="Your password..."
+                                    placeholder="Your password..."
                                 />
                                 <ErrorMessage 
                                     name="password"
