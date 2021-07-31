@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 
 // bootstrap
-import { Form, Button, Card, Container } from "react-bootstrap";
+// import { Form, Button, Card, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 // router
 import { Link, useHistory } from "react-router-dom";
@@ -14,7 +15,7 @@ import { useSelector } from "react-redux";
 import { auth } from "../firebase";
 
 // formik
-import { Formik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 function SignIn() {
 
@@ -22,23 +23,23 @@ function SignIn() {
     const isSignedIn = useSelector(state => state.user.isSignedIn);
 
     const initialFormData = { email: "", password: "" };
-    const [formData, setFormData] = useState(initialFormData);
+    // const [formData, setFormData] = useState(initialFormData);
 
-    function handleFormSubmit(event) {
-        event.preventDefault();
-        if(!isSignedIn) {
-            auth.signInWithEmailAndPassword(formData.email, formData.password)
-            .then(cred => history.push(`/profile/${cred.user.uid}`))
-            .catch(error => console.error("A problem occurred while logging in.", error))
-        }
-        else {
-            console.log("You are already signed in!");
-        }
-    }
+    // function handleFormSubmit(event) {
+    //     event.preventDefault();
+    //     if(!isSignedIn) {
+    //         auth.signInWithEmailAndPassword(formData.email, formData.password)
+    //         .then(cred => history.push(`/profile/${cred.user.uid}`))
+    //         .catch(error => console.error("A problem occurred while logging in.", error))
+    //     }
+    //     else {
+    //         console.log("You are already signed in!");
+    //     }
+    // }
 
-    function handleFormChange(event) {
-        setFormData({ ...formData, [event.target.name]: event.target.value });
-    }
+    // function handleFormChange(event) {
+    //     setFormData({ ...formData, [event.target.name]: event.target.value });
+    // }
 
     return (
         <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "90vh"}}>
@@ -52,13 +53,37 @@ function SignIn() {
                     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                        errors.email = "Email address is invalid.";
                     }
-                    else if (!values.password) {
+                    if (!values.password) {
                         errors.password = "Password is required.";
                     }
                     return errors;
                 }}
+                onSubmit={(values, { setSubmitting }) => {
+                    if (!isSignedIn) {
+                        auth.signInWithEmailAndPassword(values.email, values.password)
+                        .then(cred => history.push(`/profile/${cred.user.uid}`))
+                        .then(() => setSubmitting(false))
+                        .catch(error => console.error("A problem occurred while logging in.", error))
+                    }
+                    else if(isSignedIn) {
+                        setSubmitting(false)
+                        console.log("You are already signed in!");
+                    }
+                }}
             >
-
+                {({ isSubmitting }) => {
+                    return (
+                        <Form>
+                            <Field type="email" name="email" />
+                            <ErrorMessage name="email" component="div" />
+                            
+                            <Field type="password" name="password" />
+                            <ErrorMessage name="password" component="div" />
+                            
+                            <button type="submit" disabled={isSubmitting}>Submit</button>
+                        </Form>
+                    )
+                }}
             </Formik>
             {/* <Card style={{width: "30%"}} className="ml-3 m-auto m-3">
                 <Card.Body>
