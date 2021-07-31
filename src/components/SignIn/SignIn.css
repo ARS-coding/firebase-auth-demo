@@ -1,4 +1,6 @@
 .sign-in-form {
-    background-color: red;
-    padding: 30px;
+    padding: 30px 30px;
+    border: solid 1px blue;
+    border-radius: 5px;
+    background-color: rgb(247, 247, 247);
 }
