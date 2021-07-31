@@ -13,6 +13,9 @@ import { useSelector } from "react-redux";
 // firebase
 import { auth } from "../firebase";
 
+// formik
+import { Formik } from "formik";
+
 function SignIn() {
 
     let history = useHistory();
@@ -39,7 +42,25 @@ function SignIn() {
 
     return (
         <Container className="d-flex flex-column justify-content-center align-items-center" style={{minHeight: "90vh"}}>
-            <Card style={{width: "30%"}} className="ml-3 m-auto m-3">
+            <Formik
+                initialValues={initialFormData}
+                validate={values => {
+                    const errors = {};
+                    if (!values.email) {
+                        errors.email = "Email is required.";
+                    } 
+                    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                       errors.email = "Email address is invalid.";
+                    }
+                    else if (!values.password) {
+                        errors.password = "Password is required.";
+                    }
+                    return errors;
+                }}
+            >
+
+            </Formik>
+            {/* <Card style={{width: "30%"}} className="ml-3 m-auto m-3">
                 <Card.Body>
                     <h2 className="text-center">Sign In</h2>
                     <form onSubmit={handleFormSubmit}>
@@ -68,7 +89,7 @@ function SignIn() {
                         <Button type="submit" className="w-100">Sign Up!</Button>
                     </form>
                 </Card.Body>
-            </Card>
+            </Card> */}
             <div className="w-100 text-center mt-2">
                 Don't you have an account? <Link to="/sign-up">Sign up!</Link>
             </div>
