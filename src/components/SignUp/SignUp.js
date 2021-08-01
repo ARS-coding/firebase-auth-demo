@@ -10,12 +10,15 @@ import { Link, useHistory } from "react-router-dom";
 // firebase 
 import { auth } from "../../firebase";
 
-// cunstom hooks
+// custom hooks
 import { removeOneProp } from "../../hooks/removeOneProp";
 import { setUserDocument } from "../../hooks/setUserDocument";
 
 // formik
 import { Formik, Form, Field, ErrorMessage } from "formik";
+
+// styles 
+import "./SignUp.css";
 
 function SignUp() {
 
@@ -55,7 +58,7 @@ function SignUp() {
                     const objWithoutPasswordConfigProp = removeOneProp(values, "passwordConfirmation");
                     auth.createUserWithEmailAndPassword(values.email, values.password) 
                     .then(userCred => {
-                        setUserDocument(userCred.user.uid, { ...objWithoutPasswordConfigProp, uid: userCred.user.uid })
+                        setUserDocument(userCred.user.uid, { ...objWithoutPasswordConfigProp })
                         return userCred;
                     }) // set the document in firestore
                     .then(userCred => history.push(`/profile/${userCred.user.uid}`)) // take the user to their profile
@@ -65,7 +68,7 @@ function SignUp() {
             >
                 {({ isSubmitting }) => {
                     return (
-                        <Form className="sign-in-form">
+                        <Form className="sign-up-form">
                             <h2 style={{textAlign: "center"}}>Sign Up!</h2>
                             <div className="mb-3">
                                 <label htmlFor="username" className="form-label">Username:</label>

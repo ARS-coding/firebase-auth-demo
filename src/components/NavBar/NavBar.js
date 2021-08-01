@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 function NavBar() {
 
-    const uid = useSelector(state => state.user.uid); // use it to display the current user's profile
+    const uid = useSelector(state => state.user.authCred?.uid); // use it to display the current user's profile
     const isSignedIn = useSelector(state => state.user.isSignedIn);
     
     return (

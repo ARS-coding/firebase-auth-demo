@@ -11,7 +11,6 @@ export const listenForAuthChanges = () => {
                         isSignedIn: true,
                         firestoreDoc: doc.data(),
                         authCred: user,
-                        uid: doc.data().uid
                     };
                     dispatch({ type: "signedIn", payload: userReduxState });
                 })
@@ -26,8 +25,7 @@ export const listenForAuthChanges = () => {
 const initialState = { 
     isSignedIn: false,
     firestoreDoc: null, // user prop is gonna have a user object if a user is signed in
-    authCred: null, // whenever use signs in, we are gonna be setting the credential object to this prop
-    uid: null
+    authCred: null // whenever use signs in, we are gonna be setting the credential object to this prop
 }
 
 const userReducer = (state = initialState, action) => {
